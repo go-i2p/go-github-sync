@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>go-i2p/go-github-sync</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <nav class="nav-sidebar">
+    <div class="repo-info">
+      <h2>
+        <a href="index.html">go-i2p/go-github-sync</a>
+      </h2>
+      <div class="repo-meta">
+        📝 13 commits
+         • 📜 MIT License
+      </div>
+    </div>
+    
+    <ul class="nav-links">
+      <li><a href="index.html" class="active">Repository Overview</a></li>
+      
+      
+    </ul>
+    
+    <div class="nav-footer">
+      <a href="https://github.com/go-i2p/go-github-sync" target="_blank">View on GitHub</a>
+    </div>
+  </nav>
+  
+  <div class="main-content">
+    <header class="repo-header">
+      <h1>go-i2p/go-github-sync</h1>
+      <div class="repo-description">A Go tool that generates and sets up GitHub Actions workflows to automatically sync external repositories to GitHub mirrors.</div>
+      
+      <div class="repo-stats">
+        
+        <div class="repo-stat">
+          <span>📝</span> <span>13 commits</span>
+        </div>
+        
+        
+        <div class="repo-stat">
+          <span>📅</span> <span>Last updated: May 9, 2025</span>
+        </div>
+        
+        
+        <div class="repo-stat">
+          <span>📜</span> <span>MIT License</span>
+        </div>
+        
+      </div>
+    </header>
+    
+    <main>
+      
+      <section id="readme" class="repo-section">
+        <h2>README</h2>
+        <div class="readme-content">
+          <h1 id="go-github-sync">go-github-sync</h1>
+
+<p>A Go tool that generates and sets up GitHub Actions workflows to automatically sync external repositories to GitHub mirrors.</p>
+
+<h2 id="overview">Overview</h2>
+
+<p>The <code>go-github-sync</code> tool creates GitHub Actions workflows that periodically pull changes from a primary repository and push them to a GitHub mirror repository. It can either output the workflow YAML file or directly set it up in the target GitHub repository.</p>
+
+<h2 id="installation">Installation</h2>
+
+<pre><code class="language-bash"># Clone the repository
+git clone https://i2pgit.org/go-i2p/go-github-sync.git
+
+# Build the tool
+cd go-github-sync
+go build -o github-sync ./cmd/github-sync
+</code></pre>
+
+<h2 id="usage">Usage</h2>
+
+<pre><code class="language-bash"># Basic usage
+github-sync --primary https://example.org/repo.git --mirror https://github.com/user/repo
+
+# Output workflow to file
+github-sync --primary https://example.org/repo.git --mirror https://github.com/user/repo --output workflow.yml
+
+# Setup workflow in GitHub repository
+github-sync --primary https://example.org/repo.git --mirror https://github.com/user/repo --setup
+</code></pre>
+
+<h3 id="command-line-options">Command Line Options</h3>
+
+<ul>
+<li><code>--primary</code>, <code>-p</code>: Primary repository URL (required)</li>
+<li><code>--mirror</code>, <code>-m</code>: GitHub mirror repository URL (required, auto-detected if possible)</li>
+<li><code>--primary-branch</code>: Primary repository branch name (default: &ldquo;main&rdquo;)</li>
+<li><code>--mirror-branch</code>: GitHub mirror repository branch name (default: &ldquo;main&rdquo;)</li>
+<li><code>--interval</code>, <code>-i</code>: Sync interval - hourly, daily, weekly (default: &ldquo;hourly&rdquo;)</li>
+<li><code>--force</code>: Force sync by overwriting mirror with primary content (default: true)</li>
+<li><code>--output</code>, <code>-o</code>: Output file for workflow YAML (default: &ldquo;.github/workflows/sync.yaml&rdquo;)</li>
+<li><code>--setup</code>: Automatically setup the workflow in the GitHub repository</li>
+<li><code>--verbose</code>, <code>-v</code>: Enable verbose logging</li>
+</ul>
+
+<h2 id="requirements">Requirements</h2>
+
+<ul>
+<li>GitHub token (needed when using <code>--setup</code> flag)
+
+<ul>
+<li>Set via <code>GITHUB_TOKEN</code> or <code>GH_TOKEN</code> environment variable</li>
+</ul></li>
+</ul>
+
+<h2 id="dependencies">Dependencies</h2>
+
+<ul>
+<li>github.com/google/go-github/v61</li>
+<li>github.com/spf13/cobra</li>
+<li>go.uber.org/zap</li>
+<li>golang.org/x/oauth2</li>
+<li>gopkg.in/yaml.v3</li>
+</ul>
+
+<h2 id="license">License</h2>
+
+<p>MIT License</p>
+
+        </div>
+      </section>
+      
+      
+      
+      <section id="contributors" class="repo-section">
+        <h2>Top Contributors</h2>
+        <div class="contributors-list">
+          
+          <div class="contributor-item">
+            <!-- Use first letter as avatar if no image available -->
+            <div class="contributor-avatar">
+              e
+            </div>
+            <div class="contributor-info">
+              <div class="contributor-name">
+                eyedeekay
+              </div>
+              <div class="contributor-commits">
+                13 commits
+              </div>
+            </div>
+          </div>
+          
+        </div>
+        <a href="https://github.com/go-i2p/go-github-sync/graphs/contributors" target="_blank">View all contributors on GitHub →</a>
+      </section>
+      
+    </main>
+    
+    <footer class="page-footer">
+      <p>Generated on 2025-05-10 03:21:58 • <a href="https://github.com/go-i2p/go-github-sync" target="_blank">View on GitHub</a></p>
+    </footer>
+  </div>
+</body>
+</html>
