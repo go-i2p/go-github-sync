@@ -9,8 +9,8 @@ import (
 	"strings"
 	"time"
 
-	"github.com/go-i2p/go-github-sync/pkg/config"
-	"github.com/go-i2p/go-github-sync/pkg/logger"
+	"i2pgit.org/go-i2p/go-github-sync/pkg/config"
+	"i2pgit.org/go-i2p/go-github-sync/pkg/logger"
 )
 
 // Client provides Git repository validation and operations.

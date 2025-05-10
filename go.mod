@@ -1,4 +1,4 @@
-module github.com/go-i2p/go-github-sync
+module i2pgit.org/go-i2p/go-github-sync
 
 go 1.24.2
 

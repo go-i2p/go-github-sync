@@ -8,11 +8,11 @@ import (
 	"os/signal"
 	"syscall"
 
-	"github.com/go-i2p/go-github-sync/pkg/config"
-	"github.com/go-i2p/go-github-sync/pkg/git"
-	"github.com/go-i2p/go-github-sync/pkg/github"
-	"github.com/go-i2p/go-github-sync/pkg/logger"
-	"github.com/go-i2p/go-github-sync/pkg/workflow"
+	"i2pgit.org/go-i2p/go-github-sync/pkg/config"
+	"i2pgit.org/go-i2p/go-github-sync/pkg/git"
+	"i2pgit.org/go-i2p/go-github-sync/pkg/github"
+	"i2pgit.org/go-i2p/go-github-sync/pkg/logger"
+	"i2pgit.org/go-i2p/go-github-sync/pkg/workflow"
 	"github.com/spf13/cobra"
 )
 

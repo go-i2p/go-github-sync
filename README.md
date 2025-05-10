@@ -10,7 +10,7 @@ The `go-github-sync` tool creates GitHub Actions workflows that periodically pul
 
 ```bash
 # Clone the repository
-git clone https://github.com/go-i2p/go-github-sync.git
+git clone https://i2pgit.org/go-i2p/go-github-sync.git
 
 # Build the tool
 cd go-github-sync
