@@ -4,6 +4,7 @@ package config
 import (
 	"fmt"
 	"os"
+	"os/exec"
 	"strings"
 
 	"github.com/spf13/cobra"
@@ -50,17 +51,16 @@ var (
 // AddFlags adds the configuration flags to the given command.
 func AddFlags(cmd *cobra.Command) {
 	cmd.Flags().StringVarP(&primaryRepo, "primary", "p", "", "Primary repository URL (required)")
-	cmd.Flags().StringVarP(&mirrorRepo, "mirror", "m", "", "GitHub mirror repository URL (required)")
+	cmd.Flags().StringVarP(&mirrorRepo, "mirror", "m", detectGithubRemote(), "GitHub mirror repository URL (required)")
 	cmd.Flags().StringVar(&primaryBranch, "primary-branch", "main", "Primary repository branch name")
 	cmd.Flags().StringVar(&mirrorBranch, "mirror-branch", "main", "GitHub mirror repository branch name")
 	cmd.Flags().StringVarP(&syncInterval, "interval", "i", "hourly", "Sync interval (hourly, daily, weekly)")
 	cmd.Flags().BoolVar(&forceSync, "force", true, "Force sync by overwriting mirror with primary content")
-	cmd.Flags().StringVarP(&outputFile, "output", "o", "", "Output file for workflow YAML (writes to stdout if not specified)")
+	cmd.Flags().StringVarP(&outputFile, "output", "o", ".github/workflows/sync.yaml", "Output file for workflow YAML (writes to stdout if not specified)")
 	cmd.Flags().BoolVar(&setupWorkflow, "setup", false, "Automatically setup the workflow in the GitHub repository")
 	cmd.Flags().BoolVarP(&verbose, "verbose", "v", false, "Enable verbose logging")
 
 	cmd.MarkFlagRequired("primary")
-	cmd.MarkFlagRequired("mirror")
 }
 
 // Load parses the flags and environment variables to build the configuration.
@@ -105,4 +105,35 @@ func Load() (*Config, error) {
 	}
 
 	return &config, nil
+}
+
+// detectGithubRemote attempts to detect a GitHub remote URL from the current git repository
+func detectGithubRemote() string {
+	// Execute git remote -v command
+	cmd := exec.Command("git", "remote", "-v")
+	output, err := cmd.Output()
+	if err != nil {
+		return ""
+	}
+
+	// Parse the output to find GitHub remotes
+	lines := strings.Split(string(output), "\n")
+	for _, line := range lines {
+		if strings.Contains(line, "github.com") && strings.Contains(line, "(push)") {
+			// Extract the GitHub repository URL
+			parts := strings.Fields(line)
+			if len(parts) >= 2 {
+				url := parts[1]
+				// Convert SSH URL to HTTPS URL if needed
+				if strings.HasPrefix(url, "git@github.com:") {
+					url = strings.Replace(url, "git@github.com:", "https://github.com/", 1)
+				}
+				// Remove .git suffix if present
+				url = strings.TrimSuffix(url, ".git")
+				return url
+			}
+		}
+	}
+
+	return ""
 }

@@ -5,9 +5,7 @@ import (
 	"context"
 	"fmt"
 	"os"
-	"os/exec"
 	"os/signal"
-	"strings"
 	"syscall"
 
 	"github.com/go-i2p/go-github-sync/pkg/config"
@@ -57,18 +55,6 @@ func run(ctx context.Context, log *logger.Logger) error {
 	if err != nil {
 		return fmt.Errorf("failed to load configuration: %w", err)
 	}
-
-	// Auto-detect GitHub remote if mirror is not specified
-	if cfg.MirrorRepo == "" {
-		mirrorRepo, err := detectGithubRemote(ctx)
-		if err != nil {
-			log.Debug("Failed to auto-detect GitHub remote", "error", err)
-		} else if mirrorRepo != "" {
-			cfg.MirrorRepo = mirrorRepo
-			log.Info("Auto-detected GitHub mirror repository", "mirror_repo", cfg.MirrorRepo)
-		}
-	}
-
 	log.Info("Configuration loaded successfully",
 		"primary_repo", cfg.PrimaryRepo,
 		"mirror_repo", cfg.MirrorRepo,
@@ -125,35 +111,4 @@ func run(ctx context.Context, log *logger.Logger) error {
 	}
 
 	return nil
-}
-
-// detectGithubRemote attempts to detect a GitHub remote URL from the current git repository
-func detectGithubRemote(ctx context.Context) (string, error) {
-	// Execute git remote -v command
-	cmd := exec.CommandContext(ctx, "git", "remote", "-v")
-	output, err := cmd.Output()
-	if err != nil {
-		return "", fmt.Errorf("failed to execute git remote command: %w", err)
-	}
-
-	// Parse the output to find GitHub remotes
-	lines := strings.Split(string(output), "\n")
-	for _, line := range lines {
-		if strings.Contains(line, "github.com") && strings.Contains(line, "(push)") {
-			// Extract the GitHub repository URL
-			parts := strings.Fields(line)
-			if len(parts) >= 2 {
-				url := parts[1]
-				// Convert SSH URL to HTTPS URL if needed
-				if strings.HasPrefix(url, "git@github.com:") {
-					url = strings.Replace(url, "git@github.com:", "https://github.com/", 1)
-				}
-				// Remove .git suffix if present
-				url = strings.TrimSuffix(url, ".git")
-				return url, nil
-			}
-		}
-	}
-
-	return "", fmt.Errorf("no GitHub remote found")
 }
