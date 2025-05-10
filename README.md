@@ -1,6 +1,6 @@
 # go-github-sync
 
-A Go tool that generates and sets up GitHub Actions workflows to automatically sync external repositories to GitHub mirrors.
+A Go tool that generates and sets up GitHub Actions workflows to automatically sync external repositories to GitHub mirrors. This tool was created to make the life of a git admin easier.
 
 ## Overview
 
