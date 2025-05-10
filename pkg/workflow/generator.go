@@ -81,6 +81,9 @@ func generateWorkflowYAML(data WorkflowTemplate) (string, error) {
 	workflow := map[string]interface{}{
 		"name": "Sync Primary Repository to GitHub Mirror",
 		"on": map[string]interface{}{
+			"push": map[string]interface{}{
+				"branches": []string{data.MirrorBranch},
+			},
 			"schedule": []map[string]string{
 				{"cron": data.CronSchedule},
 			},

@@ -12,8 +12,12 @@
 
 jobs:
   sync:
+    env:
+      GITHUB_ACTIONS_ENVIRONMENT: ${{ github.action }}
     runs-on: ubuntu-latest
     steps:
+      - name: Security Check
+        run: if [ "$GITHUB_ACTIONS_ENVIRONMENT" == "" ]; then echo "This workflow is only intended to run inside GitHub Actions"; exit 1; fi
       - name: Checkout GitHub Mirror
         uses: actions/checkout@v3
         with:
@@ -61,3 +65,6 @@ name: Sync Primary Repository to GitHub Mirror
   schedule:
     - cron: 0 * * * *
   workflow_dispatch: {}
+permissions:
+  actions: read
+  contents: write
