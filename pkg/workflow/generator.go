@@ -81,30 +81,18 @@ func generateWorkflowYAML(data WorkflowTemplate) (string, error) {
 	workflow := map[string]interface{}{
 		"name": "Sync Primary Repository to GitHub Mirror",
 		"on": map[string]interface{}{
-			"push": map[string]interface{}{
-				"branches": []string{data.MirrorBranch},
-			},
 			"schedule": []map[string]string{
 				{"cron": data.CronSchedule},
 			},
 			"workflow_dispatch": map[string]interface{}{}, // Allow manual triggering
 		},
-		// Add environment constraints to prevent running outside GitHub Actions
-		"permissions": map[string]string{
-			"contents": "write", // Needed to push changes
-			"actions":  "read",  // Minimal action permissions
-		},
 		"jobs": map[string]interface{}{
 			"sync": map[string]interface{}{
 				"runs-on": "ubuntu-latest",
-				// Add environment check to ensure GitHub Actions environment
-				"env": map[string]string{
-					"GITHUB_ACTIONS_ENVIRONMENT": "${{ github.action }}", // Should always be set in GitHub Actions
-				},
 				"steps": []map[string]interface{}{
 					{
-						"name": "Security Check",
-						"run":  "if [ \"$GITHUB_ACTIONS_ENVIRONMENT\" == \"\" ]; then echo \"This workflow is only intended to run inside GitHub Actions\"; exit 1; fi",
+						"name": "Validate Github Actions Environment",
+						"run":  "if [ \"$GITHUB_ACTIONS\" != \"true\" ]; then echo 'This script must be run in a GitHub Actions environment.'; exit 1; fi",
 					},
 					{
 						"name": "Checkout GitHub Mirror",
