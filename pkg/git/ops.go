@@ -9,8 +9,8 @@ import (
 	"strings"
 	"time"
 
-	"github.com/go-i2p/go-gh-mirror/pkg/config"
-	"github.com/go-i2p/go-gh-mirror/pkg/logger"
+	"github.com/go-i2p/go-github-sync/pkg/config"
+	"github.com/go-i2p/go-github-sync/pkg/logger"
 )
 
 // Client provides Git repository validation and operations.

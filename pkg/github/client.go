@@ -11,8 +11,8 @@ import (
 	"github.com/google/go-github/v61/github"
 	"golang.org/x/oauth2"
 
-	"github.com/go-i2p/go-gh-mirror/pkg/config"
-	"github.com/go-i2p/go-gh-mirror/pkg/logger"
+	"github.com/go-i2p/go-github-sync/pkg/config"
+	"github.com/go-i2p/go-github-sync/pkg/logger"
 )
 
 const (
